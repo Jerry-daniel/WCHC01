@@ -68,9 +68,9 @@ Global variables and functions
 static void __near r_tau0_channel0_interrupt(void)
 {
     /* Start user code. Do not edit comment generated here */
-	#ifdef _P9261_PROGRAMMING_MODE_
+//	#ifdef _P9261_PROGRAMMING_MODE_
 	
-	#else
+//	#else
 		if(WPC_Function_Status.IDT_Program_Debug_Mode_Flag==FALSE)
 		{
 			Door_En_Detection();
@@ -78,7 +78,7 @@ static void __near r_tau0_channel0_interrupt(void)
 			Power_Sw_Detection();
 			ACC_Detection();
 		}	
-	#endif
+//	#endif
     /* End user code. Do not edit comment generated here */
 }
 
@@ -104,18 +104,19 @@ static void __near r_tau0_channel1_interrupt(void)
 		if(WPC_Function_Status.EUT_Wait_Time_Flag==TRUE)	{if(EUT_Waitting_Time!=CLEAR){EUT_Waitting_Time--;}}
 		if(WPC_Function_Status.ACC_Off_Dly3_5T_Flag==TRUE)	{if(ACC_Off_Reset_Time!=CLEAR){ACC_Off_Reset_Time--;}}
 		if(Over_Temperature_Reset_Time!=CLEAR)				{Over_Temperature_Reset_Time--;}
-		
+		if(FOD_Alarm_Wait_Time!=CLEAR)						{FOD_Alarm_Wait_Time--;}
+		if(Read_I2C_Data_Duty_Time!=CLEAR)					{Read_I2C_Data_Duty_Time--;}
 		if(WPC_Function_Status.OpenFOD_Detect_Time_Flag==TRUE)	
 		{
 			FOD_Alarm_Continuous_Time--;
 			if(FOD_Alarm_Continuous_Time==CLEAR)
 			{
 				WPC_Function_Status.OpenFOD_Detect_Time_Flag = FALSE;
-				FOD_Alarm_Continuous_Time = 10000;
+				FOD_Alarm_Continuous_Time = FOD_DETECT_TIME;
 				FOD_Alarm_Count = CLEAR;
 			}
 		}
-		if(FOD_Alarm_Wait_Time!=CLEAR)	{FOD_Alarm_Wait_Time--;}
+		
 	}
 	else
 	{

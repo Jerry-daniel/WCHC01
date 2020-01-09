@@ -48,7 +48,6 @@ typedef enum
 	IDT_WPC_RX_JIGGLE_ALARM_TASK				= 0x17,
 	IDT_WPC_OTHER_EOF_PWR_RX_ALARM_TASK			= 0x18,
 	IDT_WPC_TX_UNDER_VOLTAGE_LIMIT_TASK 		= 0x19,
-	
 	IDT_WPC_RX_FAIL_EPT_CODE_TASK				= 0x1A,//<== 20191114 add //
 	IDT_WPC_OVERCURRENT_TASK					= 0x1B,
 	IDT_WPC_RECEIVE_POWER_PACKET_TIMEOUT_TASK	= 0x1C,
@@ -83,7 +82,6 @@ struct WPC_FUNCTION_STATUS_FLAG
 	unsigned int	Alarm_Continuous_Flag			:1;
 	unsigned int	Temperature_Detect_Start_Flag	:1;
 	unsigned int 	IDT_Program_Debug_Mode_Flag		:1;
-	//unsigned int	B_Plus_Acc_On_Same_Time_Flag	:1;
 	unsigned int 	P9261_ReStart_End_Flag			:1;
 	unsigned int 	OpenFOD_Detect_Time_Flag		:1;	// 20191229 //
 	unsigned int 	Reserved						:6;
@@ -159,7 +157,12 @@ extern unsigned int	UVOL_Wait_Time;
 extern unsigned char FOD_Alarm_Count;
 extern unsigned int	FOD_Alarm_Wait_Time;
 extern unsigned int	FOD_Alarm_Continuous_Time;
+extern unsigned int Read_I2C_Data_Duty_Time;
 
+//---------------------//
+extern unsigned int test_alarm_count;
+extern unsigned int test_warring_alarm_count;
+//---------------------//
 
 extern unsigned int EUT_Waitting_Time;
 extern unsigned int ACC_Off_Reset_Time;

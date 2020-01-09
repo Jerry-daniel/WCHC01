@@ -91,10 +91,13 @@ void Power_Sw_Detection(void)
 					{
 						Power_Sw_Hold_Time++;
 						//----- for Qi test user code ---------------------------------//
-						/*if(Power_Sw_Hold_Time>HOLD_5S_TIME)
-						{
-							WPC_Function_Status.IDT_Program_Debug_Mode_Flag = TRUE;	
-						}*/
+						#ifdef _P9261_PROGRAMMING_MODE_
+							if(Power_Sw_Hold_Time>HOLD_5S_TIME)
+							{
+								WPC_Function_Status.IDT_Program_Debug_Mode_Flag = TRUE;	
+							}
+						#else
+						#endif
 						//----- for Qi test user code ---------------------------------//
 					}
 					else
@@ -113,16 +116,18 @@ void Power_Sw_Detection(void)
 				{		
 					if(Power_Sw.Press_Key_Overtime_Flag==FALSE)
 					{
-						Power_Sw.Active_Flag = !Power_Sw.Active_Flag;
-						
-						/*if(Power_Sw_Hold_Time<HOLD_5S_TIME)
-						{
+						#ifdef _P9261_PROGRAMMING_MODE_
+							if(Power_Sw_Hold_Time<HOLD_5S_TIME)
+							{
+								Power_Sw.Active_Flag = !Power_Sw.Active_Flag;
+							}
+							else
+							{
+								WPC_Function_Status.IDT_Program_Debug_Mode_Flag = TRUE;
+							}
+						#else
 							Power_Sw.Active_Flag = !Power_Sw.Active_Flag;
-						}
-						else
-						{
-							WPC_Function_Status.IDT_Program_Debug_Mode_Flag = TRUE;
-						}*/
+						#endif
 					}
 					else
 					{

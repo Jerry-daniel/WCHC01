@@ -185,14 +185,7 @@ static void r_iic00_callback_master_receiveend(void)
 		P9261_Address[0] = 0x06;
 		P9261_Address[1] = 0xAF;
 		P9261_IIC_FLOW = 0xD3;
-	}	
-	/*else if(P9261_IIC_FLOW==0xD3)
-	{
-		P9261_Reg_State.COIL_NUMBER = (P9261_Message&0x03);
-		P9261_Address[0] = 0x06;
-		P9261_Address[1] = 0xAF;
-		P9261_IIC_FLOW = 0xD4;
-	}*/
+	}
 	else if(P9261_IIC_FLOW==0xD3)
 	{
 		P9261_Reg_State.NTC_ADC_OUT = (P9261_Message&0x0F);
@@ -280,16 +273,8 @@ static void r_iic00_callback_master_receiveend(void)
 		P9261_Address[1] = 0x90;
 		P9261_IIC_FLOW = 0xD0;
 		P9261_IIC_State.iic_receiver_end_flag = TRUE;
+		P9261_IIC_State.read_reg_start_flag = FALSE;
 	}
-	/*else if(P9261_IIC_FLOW==0xDA)
-	{
-		P9261_Reg_State.COIL_Q_MESSAGE |= P9261_Message;
-		COIL_3_Q_Message = P9261_Reg_State.COIL_Q_MESSAGE;
-		P9261_Address[0] = 0x06;
-		P9261_Address[1] = 0x90;
-		P9261_IIC_FLOW = 0xD0;
-		P9261_IIC_State.iic_receiver_end_flag = TRUE;
-	}*/
 	else{}
 	if(P9261_IIC_State.iic_receiver_end_flag==FALSE)
 	{

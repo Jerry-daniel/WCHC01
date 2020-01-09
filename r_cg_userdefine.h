@@ -87,6 +87,8 @@ User definitions
 #define DELAY_3S				3000
 #define DELAY_3_5S				3500
 #define HOLD_5S_TIME			5000
+#define FOD_DETECT_TIME			10000
+#define FOD_COUNT				2
 
 #define POWER_SW_PRESS_TIME		20
 #define POWER_SW_HOLD_MAX_TIME	100

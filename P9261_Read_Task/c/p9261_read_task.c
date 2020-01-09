@@ -368,12 +368,24 @@ void Receive_P9261_Tx_Status_Task(unsigned char P9261_TX_STATUS)
 				//-------------------------------------------------------//
 				if(FOD_Alarm_Wait_Time==CLEAR)
 				{
-					FOD_Alarm_Wait_Time = 1000;
-					FOD_Alarm_Count++;
-					if(FOD_Alarm_Count==6)
+					FOD_Alarm_Wait_Time = DELAY_2S;
+					if((COIL_1_Q_Message<120)||(COIL_2_Q_Message<120)||(COIL_3_Q_Message<120))	{FOD_Alarm_Count++;}
+					else																		
 					{
 						FOD_Alarm_Count = CLEAR;
-						P9261_RegMessage.Open_Fod_Alarm_Status = TRUE;
+						test_warring_alarm_count++;// 20191230 long time test count //
+					}
+					
+					if(FOD_Alarm_Count>=FOD_COUNT)
+					{
+						FOD_Alarm_Count = CLEAR;
+						FOD_Alarm_Continuous_Time = FOD_DETECT_TIME;
+						WPC_Function_Status.OpenFOD_Detect_Time_Flag = FALSE;
+						if((COIL_1_Q_Message<120)||(COIL_2_Q_Message<120)||(COIL_3_Q_Message<120))
+						{
+							P9261_RegMessage.Open_Fod_Alarm_Status = TRUE;
+							test_alarm_count++; // 20191230 long time test count //
+						}
 					}
 				}
 		break;
@@ -482,6 +494,7 @@ void Receive_P9261_Combined_Msg_Task(unsigned char P9261_COMBINED)
 ***********************************************************************************************************************/
 void I2C_Commumication_Start(void)
 {
+	P9261_IIC_State.read_reg_start_flag = TRUE;
 	P9261_Address[0] = 0x06;
 	P9261_Address[1] = 0x90;
 	R_IIC00_Master_Send(P9261_ADDRESS,&P9261_Address,2);// i2c - write //

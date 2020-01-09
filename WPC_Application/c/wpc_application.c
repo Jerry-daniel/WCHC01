@@ -40,10 +40,15 @@ struct IDT_WPC_FLAG IDT_WPC_State;
 struct WPC_FUNCTION_STATUS_FLAG WPC_Function_Status;
 struct WPC_OTHER_ALARM_STATUS_FLAG	Other_Alarm;
 
-
+unsigned int Read_I2C_Data_Duty_Time = CLEAR;
 unsigned char FOD_Alarm_Count = CLEAR;
 unsigned int FOD_Alarm_Wait_Time = CLEAR;
-unsigned int FOD_Alarm_Continuous_Time = 10000;
+unsigned int FOD_Alarm_Continuous_Time = FOD_DETECT_TIME;
+
+unsigned int test_alarm_count = CLEAR;
+unsigned int test_warring_alarm_count = CLEAR;
+
+
 
 //unsigned char p9261_led_state = CLEAR;
 //unsigned int caculator_time = CLEAR;
@@ -192,6 +197,7 @@ void IDT_WPC_Processer_Task(void)
 {
 	if(P9261_IIC_State.iic_receiver_end_flag==TRUE)
 	{	
+		Read_I2C_Data_Duty_Time = 50;
 		P9261_IIC_State.iic_receiver_end_flag = FALSE;
 		Clear_P9261_RegMessage_State_Flag(&P9261_RegMessage); // clear read p9261 register message //
 		Receive_P9261_Tx_State_Task(P9261_TX_STATE_MSG);
@@ -333,7 +339,17 @@ void IDT_WPC_Processer_Task(void)
 		P9261_TX_STATE_MSG = RESET_VALUE;
 		P9261_TX_STATUS_MSG = RESET_VALUE;
 		P9261_COMBINED_MSG = RESET_VALUE;
-		I2C_Commumication_Start();
+		//I2C_Commumication_Start();
+	}
+	else
+	{
+		if(Read_I2C_Data_Duty_Time==CLEAR)
+		{
+			if(P9261_IIC_State.read_reg_start_flag==FALSE)
+			{
+				I2C_Commumication_Start();
+			}
+		}
 	}
 }
 /***********************************************************************************************************************

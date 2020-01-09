@@ -18,12 +18,13 @@ p9261 IIC Status flag struct define
 ***********************************************************************************************************************/
 struct P9261_IIC_FLAG
 {
-	unsigned char	read_P9261_reg_flag			:1;
+	unsigned char	read_reg_start_flag			:1;
 	unsigned char	iic_send_end_flag			:1;	
 	unsigned char	iic_receiver_end_flag		:1;
 	unsigned char 	reserved_flag				:5;
 };
 extern struct P9261_IIC_FLAG P9261_IIC_State;
+
 /***********************************************************************************************************************
 P9261 0x0690(Tx_State)Register message status enum definitions
 ***********************************************************************************************************************/

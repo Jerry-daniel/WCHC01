@@ -71,11 +71,15 @@ void main(void)
 {
     R_MAIN_UserInit();
     /* Start user code. Do not edit comment generated here */
-	WPC_Function_Status.IDT_Program_Debug_Mode_Flag = FALSE;
+	#ifdef _P9261_PROGRAMMING_MODE_
+	
+	#else
+		WPC_Function_Status.IDT_Program_Debug_Mode_Flag = FALSE;
+	#endif
     while (1U)
     {	
 		
-		/*if(WPC_Function_Status.IDT_Program_Debug_Mode_Flag==TRUE)
+		if(WPC_Function_Status.IDT_Program_Debug_Mode_Flag==TRUE)
 		{
 			if(CHARGE_EN==LEVEL_LOW)	{CHARGE_ENABLE;}
 			IDT_Monitor_Mode_LED();
@@ -86,18 +90,19 @@ void main(void)
 			Error_LED_Alarm_Event();
         	Error_Buzzer_Alarm_Event();
 			PhoneForger_Buzzer_Alarm_Event();
-		}*/
+		}
 		
-		
+		/*
 		#ifdef _P9261_PROGRAMMING_MODE_
 				if(CHARGE_EN==LEVEL_LOW)	{CHARGE_ENABLE;}
+				IDT_Monitor_Mode_LED();
 		#else
 				IDT_WPC_Processer_Task();
 				Error_LED_Alarm_Event();
         		Error_Buzzer_Alarm_Event();
 				PhoneForger_Buzzer_Alarm_Event();
 		#endif
-		
+		*/
     }
     /* End user code. Do not edit comment generated here */
 }
